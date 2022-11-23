@@ -13,13 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('mazes', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->unsignedBigInteger('user_id');
+            $table->string('entrance');
+            $table->string('grid_size');
+            $table->json('walls');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
+            $table->index('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
+
     }
 
     /**
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('mazes');
     }
 };

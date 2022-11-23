@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MazeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,10 @@ Route::get('/ping', function () {
     return ['pong' => true];
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/user', [AuthController::class, 'register']);
+Route::middleware('api')->post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('api')->post('/maze', [MazeController::class, 'save']);
+Route::middleware('api')->get('/maze', [MazeController::class, 'list']);
+Route::middleware('api')->get('/maze/{mazeId}/solution', [MazeController::class, 'solution']);
+

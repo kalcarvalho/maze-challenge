@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 'Maze - Backend Challenge #2';
+    return view('welcome');
 });
-
