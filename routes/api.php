@@ -23,6 +23,10 @@ Route::get('/ping', function () {
     return ['pong' => true];
 });
 
+Route::get('/env', function () {
+    return $_ENV;
+});
+
 Route::get('/check', function() {
     try {
         DB::connection()->getPdo();
