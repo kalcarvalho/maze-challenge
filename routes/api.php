@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MazeController;
+use Illuminate\Support\Facades\DB;
+
 
 
 /*
@@ -19,6 +21,14 @@ use App\Http\Controllers\MazeController;
 
 Route::get('/ping', function () {
     return ['pong' => true];
+});
+
+Route::get('/check', function() {
+    try {
+        DB::connection()->getPdo();
+    } catch (\Exception $e) {
+        return("Could not connect to the database.  Please check your configuration. error:" . $e );
+    }
 });
 
 Route::post('/user', [AuthController::class, 'register']);
