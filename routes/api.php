@@ -23,17 +23,17 @@ Route::get('/ping', function () {
     return ['pong' => true];
 });
 
-Route::get('/env', function () {
-    return $_ENV;
-});
+// Route::get('/env', function () {
+//     return $_ENV;
+// });
 
-Route::get('/check', function() {
-    try {
-        DB::connection()->getPdo();
-    } catch (\Exception $e) {
-        return("Could not connect to the database.  Please check your configuration. error:" . $e );
-    }
-});
+// Route::get('/check', function() {
+//     try {
+//         DB::connection()->getPdo();
+//     } catch (\Exception $e) {
+//         return("Could not connect to the database.  Please check your configuration. error:" . $e );
+//     }
+// });
 
 Route::post('/user', [AuthController::class, 'register']);
 Route::middleware('api')->post('/login', [AuthController::class, 'login'])->name('login');
