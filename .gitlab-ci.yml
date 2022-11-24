@@ -1,0 +1,13 @@
+stages:
+  - cloudbuild
+
+cloudbuild:
+  only:
+  - main
+  image: google/cloud-sdk:latest
+  stage: cloudbuild
+  script:
+    - echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
+    - gcloud config set project ${PROJECT_ID}
+    - gcloud builds submit . --config cloudbuild.yaml --substitutions=_CI_COMMIT_SHA=$CI_COMMIT_SHORT_SHA
