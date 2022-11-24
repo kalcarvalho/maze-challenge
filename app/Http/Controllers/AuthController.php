@@ -30,8 +30,6 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'regex:/\w*$/', 'min:7'],
         ]);
 
-        dd($request->all());
-
         if ($validator->fails()) {
             $array['error'] = $validator->getMessageBag();
             return $array;
