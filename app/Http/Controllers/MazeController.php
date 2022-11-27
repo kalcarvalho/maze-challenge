@@ -138,7 +138,7 @@ class MazeController extends Controller
                             if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
 
                                 $array['path'] = $path;
-                                $array['walls'] = $walls;
+                                // $array['walls'] = $walls;
 
                                 return $array;
                             }
@@ -152,7 +152,7 @@ class MazeController extends Controller
 
                                 if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
                                     $array['path'] = $path;
-                                    $array['walls'] = $walls;
+                                    // $array['walls'] = $walls;
                                 }
 
                                 return $array;
@@ -167,7 +167,7 @@ class MazeController extends Controller
 
         
         $array['path'] = $path;
-        $array['walls'] = $walls;
+        // $array['walls'] = $walls;
         $size = sizeof($array['path']);
 
         if($maze['entrance'] == $path[$size-1]) {
