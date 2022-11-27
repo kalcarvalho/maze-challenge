@@ -30,16 +30,13 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'regex:/\w*$/', 'min:7'],
         ]);
 
-        // if ($validator->fails()) {
-        //     $array['error'] = $validator->getMessageBag();
-        //     return $array;
-        // }
+        if ($validator->fails()) {
+            $array['error'] = $validator->getMessageBag();
+            return $array;
+        }
 
         $username = $request->input('username');
         $password = $request->input('password');
-
-        $username = 'kalcarvalho';  
-        $password = '6as4d65as4d64ad64';
 
         $user = new User();
         $user->username = $username;
