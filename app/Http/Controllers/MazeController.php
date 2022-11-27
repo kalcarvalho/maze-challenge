@@ -97,6 +97,11 @@ class MazeController extends Controller
 
         $maze = Maze::where('user_id', '=', $userId)->where('id', '=', $mazeId)->first();
 
+        if(!$maze) {
+            $array['error'] = 'Maze ID not found.';
+            return $array;
+        }
+
         $position = $maze['entrance'];
         $rc = str_split($position);
 
@@ -159,6 +164,8 @@ class MazeController extends Controller
                 }
             }
         }
+
+        $array['size'] = sizeof(json_decode($array['path'], true));
 
         $array['path'] = $path;
         $array['walls'] = $walls;
