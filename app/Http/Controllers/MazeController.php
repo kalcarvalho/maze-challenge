@@ -170,7 +170,7 @@ class MazeController extends Controller
         $array['walls'] = $walls;
         $size = sizeof($array['path']);
 
-        $array['x'] = $path[$size];
+        $array['x'] = $path[$size-1];
 
         return $array;
     }
