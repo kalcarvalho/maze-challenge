@@ -7,15 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class MazeController extends Controller
-{
-    public function __construct()
-    {
+class MazeController extends Controller {
+    public function __construct() {
         $this->middleware('auth:sanctum');
     }
 
-    public function save(Request $request)
-    {
+    public function save(Request $request) {
         $array = ['error' => ''];
 
         $userId = Auth::id();
@@ -46,14 +43,14 @@ class MazeController extends Controller
             $array['error'] = 'The grid size must be at least 1x1.';
             return $array;
         }
-        
+
         $maze = new Maze();
         $maze->user_id = $userId;
         $maze->entrance = $data['entrance'];
         $maze->grid_size = $data['gridSize'];
         $maze->walls = $data['walls'];
         $maze->save();
-        
+
         $array['data'] = ['message' => 'Your Maze has been sucessfully created!'];
         $array['data'] = ['success' => true];
 
@@ -82,11 +79,9 @@ class MazeController extends Controller
         $array['mazes'] = $data;
 
         return $array;
-
     }
 
-    public function solution(Request $request, $mazeId)
-    {
+    public function solution(Request $request, $mazeId) {
         $array = ['error' => ''];
 
         $userId = Auth::id();
@@ -97,7 +92,7 @@ class MazeController extends Controller
 
         $maze = Maze::where('user_id', '=', $userId)->where('id', '=', $mazeId)->first();
 
-        if(!$maze) {
+        if (!$maze) {
             $array['error'] = 'Maze ID not found.';
             return $array;
         }
@@ -165,32 +160,31 @@ class MazeController extends Controller
             }
         }
 
-        
+
         // $array['walls'] = $walls;
         $array['path'] = $path;
         $size = sizeof($path);
 
-        if($data['steps'] == 'max') {
+        if ($data['steps'] == 'max') {
             $path = $this->doRefinePath($maze['entrance'], $path, $hexit, $wexit, $size);
         }
 
         $array['final_path'] = $path;
-        
-        if($maze['entrance'] == $path[$size-1]) {
+
+        if ($maze['entrance'] == $path[$size - 1]) {
             $array['error'] = 'A Solution has not been found.';
             return $array;
         }
-        
-        if (!(str_contains($path[$size-1], $hexit) && str_contains($path[$size-1], $wexit))) {
+
+        if (!(str_contains($path[$size - 1], $hexit) && str_contains($path[$size - 1], $wexit))) {
             $array['error'] = 'A Solution has not been found.';
             return $array;
         }
-        
+
         return $array;
     }
 
-    public function doMove($row, $col, $walls, $path, $hexit, $wexit, $m)
-    {
+    public function doMove($row, $col, $walls, $path, $hexit, $wexit, $m) {
 
         $doMove = false;
 
@@ -251,8 +245,12 @@ class MazeController extends Controller
         return [$r, $c, $new_pos, true];
     }
 
+    /**
+     * Check the max size of a path
+     */
+
     public function doRefinePath($entrance, $path, $hexit, $wexit, $pathSize) {
-        for($i=$pathSize; $i>0;$i--) {
+        for ($i = $pathSize - 1; $i > 0; $i--) {
             if (!(str_contains($path[$i], $hexit) && str_contains($path[$i], $wexit))) {
                 $path = array_pop($path);
             }
