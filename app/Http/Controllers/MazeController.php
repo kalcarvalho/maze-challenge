@@ -165,10 +165,10 @@ class MazeController extends Controller
             }
         }
 
-        $array['size'] = sizeof(json_decode($array['path'], true));
-
+        
         $array['path'] = $path;
         $array['walls'] = $walls;
+        $array['size'] = sizeof(json_decode($array['path'], true));
 
         return $array;
     }
