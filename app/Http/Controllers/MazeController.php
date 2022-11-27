@@ -170,7 +170,15 @@ class MazeController extends Controller
         $array['walls'] = $walls;
         $size = sizeof($array['path']);
 
-        $array['x'] = $path[$size-1];
+        if($maze['entrance'] == $path[$size-1]) {
+            $array['error'] = 'A Solution has not been found.';
+            return $array;
+        }
+
+        if (!(str_contains($path[$size-1], $hexit) && str_contains($path[$size-1], $wexit))) {
+            $array['error'] = 'A Solution has not been found.';
+            return $array;
+        }
 
         return $array;
     }
