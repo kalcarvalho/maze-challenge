@@ -133,7 +133,6 @@ class MazeController extends Controller {
                             if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
 
                                 $array['path'] = $path;
-                                // $array['walls'] = $walls;
 
                                 return $array;
                             }
@@ -147,7 +146,6 @@ class MazeController extends Controller {
 
                                 if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
                                     $array['path'] = $path;
-                                    // $array['walls'] = $walls;
                                 }
 
                                 return $array;
@@ -161,23 +159,25 @@ class MazeController extends Controller {
         }
 
 
-        // $array['walls'] = $walls;
         $array['path'] = $path;
         $size = sizeof($path);
 
         if ($data['steps'] == 'max') {
-            $path = $this->doRefinePath($maze['entrance'], $path, $hexit, $wexit, $size);
+            $final_path = $this->doRefinePath($path, $hexit, $wexit, $size);
+            $size = sizeof($path);
+            $array['path'] = $final_path;
         }
 
-        $array['final_path'] = $path;
 
         if ($maze['entrance'] == $path[$size - 1]) {
-            $array['error'] = 'A Solution has not been found.';
+            $array['error'] = '1 A Solution has not been found.';
+            unset($array['path']);
             return $array;
         }
 
-        if (!(str_contains($path[$size - 1], $hexit) && str_contains($path[$size - 1], $wexit))) {
-            $array['error'] = 'A Solution has not been found.';
+        if (!(str_contains($path[$size - 1], $hexit) || str_contains($path[$size - 1], $wexit))) {
+            $array['error'] = '2 A Solution has not been found.';
+            unset($array['path']);
             return $array;
         }
 
@@ -246,13 +246,16 @@ class MazeController extends Controller {
     }
 
     /**
-     * Check the max size of a path
+     * Check and correct the max size of a path
      */
 
-    public function doRefinePath($entrance, $path, $hexit, $wexit, $pathSize) {
+    public function doRefinePath($path, $hexit, $wexit, $pathSize) {
+
         for ($i = $pathSize - 1; $i > 0; $i--) {
-            if (!(str_contains($path[$i], $hexit) && str_contains($path[$i], $wexit))) {
-                $path = array_pop($path);
+            if (str_contains($path[$i], $hexit) || str_contains($path[$i], $wexit)) {
+                return $path;
+            } else {
+                array_pop($path);
             }
         }
         return $path;
