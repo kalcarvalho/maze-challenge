@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "2976e016-5edf-4612-ae07-bd3f91c82e6c",
+		"name": "Heroku-Maze-Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Maze User Create",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://safe-sea-98906.herokuapp.com/api/user?username=&password=",
+					"protocol": "https",
+					"host": [
+						"safe-sea-98906",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": ""
+						},
+						{
+							"key": "password",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Maze Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://safe-sea-98906.herokuapp.com/api/login?username=&password=",
+					"protocol": "https",
+					"host": [
+						"safe-sea-98906",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": ""
+						},
+						{
+							"key": "password",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Maze List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://safe-sea-98906.herokuapp.com/api/maze/",
+					"protocol": "https",
+					"host": [
+						"safe-sea-98906",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"maze",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get MIN Solution",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://safe-sea-98906.herokuapp.com/api/maze/1/solution?steps=min",
+					"protocol": "https",
+					"host": [
+						"safe-sea-98906",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"maze",
+						"1",
+						"solution"
+					],
+					"query": [
+						{
+							"key": "steps",
+							"value": "min"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get MAX Solution",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://safe-sea-98906.herokuapp.com/api/maze/1/solution?steps=max",
+					"protocol": "https",
+					"host": [
+						"safe-sea-98906",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"maze",
+						"1",
+						"solution"
+					],
+					"query": [
+						{
+							"key": "steps",
+							"value": "max"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
