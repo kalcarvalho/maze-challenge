@@ -170,13 +170,13 @@ class MazeController extends Controller {
 
 
         if ($maze['entrance'] == $path[$size - 1]) {
-            $array['error'] = '1 A Solution has not been found.';
+            $array['error'] = 'A Solution has not been found.';
             unset($array['path']);
             return $array;
         }
 
         if (!(str_contains($path[$size - 1], $hexit) || str_contains($path[$size - 1], $wexit))) {
-            $array['error'] = '2 A Solution has not been found.';
+            $array['error'] = 'A Solution has not been found.';
             unset($array['path']);
             return $array;
         }
