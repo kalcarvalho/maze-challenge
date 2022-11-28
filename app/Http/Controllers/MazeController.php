@@ -105,10 +105,9 @@ class MazeController extends Controller {
         $heigth = $gridSize[0];
         $width = $gridSize[1];
         $walls = json_decode($maze['walls']);
-        $hexit = chr(65 + $heigth - 1);
-        $wexit = $rc[1] + intval($width) - 1;
+        $colexit = chr(65 + $heigth - 1);
+        $rowexit = $rc[1] + intval($width) - 1;
 
-        $exit = false;
         $path = [$maze['entrance']];
 
         for ($r = 1; $r <= $heigth; $r++) {
@@ -121,7 +120,7 @@ class MazeController extends Controller {
 
                 for ($m = 1; $m <= 4; $m++) {
 
-                    $doMove = $this->doMove($rc[1], $rc[0], $walls, $path, $hexit, $wexit, $m);
+                    $doMove = $this->doMove($rc[1], $rc[0], $walls, $path, $colexit, $rowexit, $m);
 
                     if ($doMove[3]) {
                         $position = $doMove[2];
@@ -130,7 +129,7 @@ class MazeController extends Controller {
 
                         if ($data['steps'] == 'min') {
 
-                            if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
+                            if (str_contains($position, $rowexit)) {
 
                                 $array['path'] = $path;
 
@@ -144,7 +143,7 @@ class MazeController extends Controller {
 
                             if ($position == $last_position) {
 
-                                if (str_contains($position, $hexit) || str_contains($position, $wexit)) {
+                                if (str_contains($position, $colexit)) {
                                     $array['path'] = $path;
                                 }
 
@@ -163,7 +162,7 @@ class MazeController extends Controller {
         $size = sizeof($path);
 
         if ($data['steps'] == 'max') {
-            $final_path = $this->doRefinePath($path, $hexit, $wexit, $size);
+            $final_path = $this->doRefinePath($path, $rowexit, $size);
             $size = sizeof($final_path);
             $array['path'] = $final_path;
         }
@@ -174,16 +173,16 @@ class MazeController extends Controller {
             return $array;
         }
 
-        if ((!(str_contains($path[$size - 1], $hexit))) && (!(str_contains($path[$size - 1], $wexit)))) {
+        if ((!(str_contains($path[$size - 1], $rowexit)))) {
             $array['error'] = 'A Solution has not been found.';
             unset($array['path']);
             return $array;
         }
-
+        
         return $array;
     }
 
-    public function doMove($row, $col, $walls, $path, $hexit, $wexit, $m) {
+    public function doMove($row, $col, $walls, $path, $colexit, $rowexit, $m) {
 
         $doMove = false;
 
@@ -194,7 +193,7 @@ class MazeController extends Controller {
 
         switch ($m) {
             case 1:
-                if ($row == $wexit) { //last row
+                if ($row == $rowexit) { //last row
                     $new_pos = $col . $row;
                 } else {
                     $new_pos = $col . ++$row;
@@ -202,7 +201,7 @@ class MazeController extends Controller {
                 }
                 break; // down
             case 2:
-                if ($col == $hexit) { //last column
+                if ($col == $colexit) { //last column
                     $new_pos = $col . $row;
                 } else {
                     $new_pos = ++$col . $row;
@@ -248,10 +247,10 @@ class MazeController extends Controller {
      * Check and correct the max size of a path
      */
 
-    public function doRefinePath($path, $hexit, $wexit, $pathSize) {
+    public function doRefinePath($path, $rowexit, $pathSize) {
 
         for ($i = $pathSize - 1; $i > 0; $i--) {
-            if (str_contains($path[$i], $hexit) || str_contains($path[$i], $wexit)) {
+            if (str_contains($path[$i], $rowexit)) {
                 return $path;
             } else {
                 array_pop($path);
