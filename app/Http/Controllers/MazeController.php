@@ -164,10 +164,9 @@ class MazeController extends Controller {
 
         if ($data['steps'] == 'max') {
             $final_path = $this->doRefinePath($path, $hexit, $wexit, $size);
-            $size = sizeof($path);
+            $size = sizeof($final_path);
             $array['path'] = $final_path;
         }
-
 
         if ($maze['entrance'] == $path[$size - 1]) {
             $array['error'] = 'A Solution has not been found.';
@@ -175,7 +174,7 @@ class MazeController extends Controller {
             return $array;
         }
 
-        if (!(str_contains($path[$size - 1], $hexit) || str_contains($path[$size - 1], $wexit))) {
+        if ((!(str_contains($path[$size - 1], $hexit))) && (!(str_contains($path[$size - 1], $wexit)))) {
             $array['error'] = 'A Solution has not been found.';
             unset($array['path']);
             return $array;
